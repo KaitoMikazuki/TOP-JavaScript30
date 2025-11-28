@@ -59,7 +59,25 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  const soundDict = {}
+  const sounds = document.querySelectorAll("audio");
+  sounds.forEach(sound => soundDict[sound.dataset.key] = new Audio(sound.src));
 
+  const keys = document.querySelectorAll(".key");
+  keys.forEach(key => {
+    key.addEventListener("click", playSound)
+  });
+
+  function playSound(keyClick){
+    const target = keyClick.target.closest("div.key")
+    let sound = soundDict[target.dataset.key]
+    console.log(keyClick.target)
+    sound.play()
+  }
+
+  function debug(key){
+    console.log(key)
+  }
 </script>
 
 
