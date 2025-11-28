@@ -59,9 +59,12 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  const soundDict = {}
-  const sounds = document.querySelectorAll("audio");
-  sounds.forEach(sound => soundDict[sound.dataset.key] = new Audio(sound.src));
+  Sound = (function(){
+    const dict = {}
+    const sounds = document.querySelectorAll("audio");
+    sounds.forEach(sound => dict[sound.dataset.key] = new Audio(sound.src));
+    return {dict}
+  })();
 
   const keys = document.querySelectorAll(".key");
   keys.forEach(key => {
@@ -70,8 +73,8 @@
 
   function playSound(keyClick){
     const target = keyClick.target.closest("div.key")
-    let sound = soundDict[target.dataset.key]
-    console.log(keyClick.target)
+    console.log(Sound.dict)
+    let sound = Sound.dict[target.dataset.key];
     sound.play()
   }
 
