@@ -69,6 +69,7 @@
     function playClick(clickEvent){
         const target = clickEvent.target.closest("div.key").dataset.key;
         const soundFile = dict[target];
+        soundFile.currentTime = 0;
         soundFile.play();
     }
     
@@ -78,6 +79,7 @@
         const keyVal = keyboardEvent.key.toUpperCase().charCodeAt(0);
         const soundFile = dict[keyVal];
         console.log(keyVal)
+        soundFile.currentTime = 0;
         soundFile.play();
       }
     }
