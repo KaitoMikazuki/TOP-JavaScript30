@@ -64,18 +64,31 @@
     const sounds = document.querySelectorAll("audio");
     sounds.forEach(sound => dict[sound.dataset.key] = new Audio(sound.src));
 
+    // playclick and playkeyboard both reference to Sound.dict to play something
+
     function playClick(clickEvent){
         const target = clickEvent.target.closest("div.key").dataset.key;
         const soundFile = dict[target];
         soundFile.play();
     }
-    return {playClick}
+    
+    const keyboardValues = "asdfghjkl".split("")
+    function playKeyboard(keyboardEvent){
+      if (keyboardValues.includes(keyboardEvent.key)){
+        const keyVal = keyboardEvent.key.toUpperCase().charCodeAt(0);
+        const soundFile = dict[keyVal];
+        console.log(keyVal)
+        soundFile.play();
+      }
+    }
+    return {playClick, playKeyboard}
 
   })();
 
   const keys = document.querySelectorAll(".key");
   keys.forEach(key => {
     key.addEventListener("click", Sound.playClick)
+    document.addEventListener("keydown", Sound.playKeyboard)
   });
 
 </script>
