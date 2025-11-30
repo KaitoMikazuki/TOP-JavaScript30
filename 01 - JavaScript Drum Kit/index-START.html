@@ -63,24 +63,21 @@
     const dict = {}
     const sounds = document.querySelectorAll("audio");
     sounds.forEach(sound => dict[sound.dataset.key] = new Audio(sound.src));
-    return {dict}
+
+    function playClick(clickEvent){
+        const target = clickEvent.target.closest("div.key").dataset.key;
+        const soundFile = dict[target];
+        soundFile.play();
+    }
+    return {playClick}
+
   })();
 
   const keys = document.querySelectorAll(".key");
   keys.forEach(key => {
-    key.addEventListener("click", playSound)
+    key.addEventListener("click", Sound.playClick)
   });
 
-  function playSound(keyClick){
-    const target = keyClick.target.closest("div.key")
-    console.log(Sound.dict)
-    let sound = Sound.dict[target.dataset.key];
-    sound.play()
-  }
-
-  function debug(key){
-    console.log(key)
-  }
 </script>
 
 
