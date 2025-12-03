@@ -59,18 +59,43 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-document.addEventListener("keydown", playSound)
-// document.addEventListener('transitionend', removeClass)
+  Sound = (function(){
+    const dict = {}
+    const sounds = document.querySelectorAll("audio");
+    sounds.forEach(sound => dict[sound.dataset.key] = new Audio(sound.src));
 
-function playSound(e){
-  const keyCode = e.key.toUpperCase().charCodeAt(0);
-  const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
-  const keyDiv = document.querySelector(`div[data-key="${keyCode}"]`);
-  
-  if (!audio) return;
-  audio.currentTime = 0;
-  audio.play();
-}
+    // playclick and playkeyboard both reference to Sound.dict to play something
+
+    function playClick(clickEvent){
+        const target = clickEvent.target.closest("div.key").dataset.key;
+        const soundFile = dict[target];
+        soundFile.currentTime = 0;
+        soundFile.play();
+    }
+    
+    const keyboardValues = "asdfghjkl".split("")
+    function playKeyboard(keyboardEvent){
+      if (keyboardValues.includes(keyboardEvent.key)){
+        const keyVal = keyboardEvent.key.toUpperCase().charCodeAt(0);
+        const soundFile = dict[keyVal];
+        console.log(keyVal)
+        soundFile.currentTime = 0;
+        soundFile.play();
+      }
+    }
+
+    function highlightButton(element){
+      element.classList.add("pressed")
+    }
+    return {playClick, playKeyboard}
+
+  })();
+
+  const keys = document.querySelectorAll(".key");
+  keys.forEach(key => {
+    key.addEventListener("click", Sound.playClick)
+  });
+  document.addEventListener("keydown", Sound.playKeyboard)
 
 </script>
 
