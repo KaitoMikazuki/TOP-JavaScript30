@@ -59,8 +59,8 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-document.addEventListener("keydown", playSound)
-// document.addEventListener('transitionend', removeClass)
+document.addEventListener("keydown", playSound);
+document.addEventListener('transitionend', removeClass);
 
 function playSound(e){
   const keyCode = e.key.toUpperCase().charCodeAt(0);
@@ -70,6 +70,12 @@ function playSound(e){
   if (!audio) return;
   audio.currentTime = 0;
   audio.play();
+
+  keyDiv.classList.add("playing");
+}
+
+function removeClass(e){
+  e.target.classList.remove("playing")
 }
 
 </script>
